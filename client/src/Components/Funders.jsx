@@ -1,7 +1,7 @@
 const Funders = () => {
   return (
-    <div className="flex flex-col w-[25%] bg-white bg-opacity-20  text-[#0ef] backdrop-blur-sm ">
-      <div className="p-2 text-3xl font-extrabold ">Top_Funders</div>
+    <div className="flex flex-col w-[25%]  text-[#0ff] shadow-xl rounded-sm shadow-[#1e2546]  ">
+      <div className=" text-[2.3rem] font-extrabold">Top_Funders</div>
     </div>
   );
 };
