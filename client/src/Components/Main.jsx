@@ -1,4 +1,32 @@
-const Main = () => {
+import { ethers } from "ethers";
+import { useRef } from "react";
+
+const Main = ({ contract, wallet }) => {
+  const value = useRef();
+
+  const fund = async () => {
+    const ethAmount = value.current.value;
+
+    try {
+      const transaction = await contract.fund({
+        value: ethers.utils.parseEther(ethAmount),
+      });
+      const transactionReceipt = await transaction.wait(1);
+      console.log(transactionReceipt);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getBalance = async () => {
+    const res = await contract.s_addressFunded(wallet);
+    const response = await contract.getbalance();
+    console.log(
+      ethers.utils.formatEther(response),
+      "ete " + ethers.utils.formatEther(res)
+    );
+  };
+
   return (
     <div className="flex flex-col font-bold px-6 pt-5 w-[73%] bg-white bg-opacity-20  text-white backdrop-blur-sm">
       <div className="text-3xl">Welcome cypto_funders</div>
@@ -17,10 +45,20 @@ const Main = () => {
         <input
           className="backdrop-blur-lg bg-opacity-10 bg-white outline-none px-3 placeholder-slate-50/[0.5]"
           type="text"
+          ref={value}
           placeholder="add your eth amount"
         />
-        <button className="p-3 bg-gradient-to-tr from-green-400 to-blue-500 rounded-md">
+        <button
+          onClick={fund}
+          className="p-3 bg-gradient-to-tr from-green-400 to-blue-500 rounded-md"
+        >
           send
+        </button>
+        <button
+          onClick={getBalance}
+          className="p-3 bg-gradient-to-tr from-green-400 to-blue-500 rounded-md"
+        >
+          show
         </button>
       </div>
     </div>
