@@ -1,4 +1,10 @@
 {
+  "name": "crytofunder",
+  "version": "1.0.0",
+  "author": {
+    "name": "dexter"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
@@ -6,9 +12,12 @@
     "ethers": "^5.7.2",
     "hardhat": "^2.12.0",
     "hardhat-deploy": "^0.11.18",
-    "solidity-coverage": "^0.8.2"
-  },
-  "dependencies": {
+    "solidity-coverage": "^0.8.2",
     "@chainlink/contracts": "^0.5.1"
+  },
+  "scripts": {
+    "test": "yarn hardhat test",
+    "deploy": "yarn hardhat deploy",
+    "coverage": "yarn hardhat coverage"
   }
 }

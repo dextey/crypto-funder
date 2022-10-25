@@ -22,10 +22,20 @@ describe("FundMe", () => {
   });
 
   describe("Fund", () => {
-    it("Able to fund ethers and store Address in mappings", async () => {
+    beforeEach(async () => {
       await fundMe.fund({ value: ethAmount });
+    });
+
+    it("Able to fund ethers and store Address in mappings", async () => {
       const value = await fundMe.fundedByAddress(deployer);
       assert.equal(value.toString(), ethAmount);
+    });
+
+    it("No duplicate funders", async () => {
+      await fundMe.fund({ value: ethAmount });
+      await fundMe.fund({ value: ethAmount });
+      const funders = await fundMe.getFunders();
+      assert.equal(funders.length, 1);
     });
   });
 
