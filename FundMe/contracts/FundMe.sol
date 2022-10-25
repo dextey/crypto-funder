@@ -14,7 +14,12 @@ contract FundMe {
 
     AggregatorV3Interface public priceFeed;
 
-    mapping(address => uint256) fundedByAddress;
+    mapping(address => uint256) public fundedByAddress;
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert FundMe_error();
+        _;
+    }
 
     constructor(address priceFeedAddress) {
         owner = msg.sender;
@@ -26,5 +31,13 @@ contract FundMe {
             msg.value.convert(priceFeed) >= MINIMUM_USD,
             "Send minimum 50$ worth ethereum"
         );
+        fundedByAddress[msg.sender] += msg.value;
+    }
+
+    function withDraw() public onlyOwner {
+        (bool success, ) = payable(owner).call{value: address(this).balance}(
+            ""
+        );
+        require(success, "Transaction failed");
     }
 }

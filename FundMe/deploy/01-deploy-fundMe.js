@@ -15,4 +15,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   console.log("====================================");
 };
 
-module.exports.tags = ["fundMe", "all"];
+module.exports.tags = ["all", "fundMe"];

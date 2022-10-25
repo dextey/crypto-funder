@@ -4,3 +4,5 @@ cache
 deployments
 
 .env
+coverage.json
+coverage
