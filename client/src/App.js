@@ -4,7 +4,7 @@ import Main from "./Components/Main";
 import Navbar from "./Components/Navbar";
 
 import { ethers } from "ethers";
-import { ABI, contractAddress } from "./Constants";
+import { CONTRACT } from "./contracts/contract";
 
 function App() {
   const [wallet, setWallet] = useState(null);
@@ -18,18 +18,22 @@ function App() {
       if (provider) {
         const signer = provider.getSigner();
 
-        const contract = new ethers.Contract(contractAddress, ABI, signer);
+        const fundMe = new ethers.Contract(
+          CONTRACT.address,
+          CONTRACT.abi,
+          signer
+        );
 
-        setContract(contract);
+        setContract(fundMe);
       }
     }
   }, []);
 
   return (
-    <div className="h-screen w-full p-3 bg-gradient-to-br from-[#131130] via-[#171368dd] to-[#00ffff] flex flex-col">
+    <div className="h-screen w-full p-3 bg-gradient-to-br from-[#131130] via-[#171368dd] to-[#00ffff] flex flex-col overflow-hidden">
       <Navbar wallet={wallet} setWallet={setWallet} />
       <div className="flex h-full py-4 justify-between">
-        <Funders />
+        <Funders contract={contract} />
         <Main contract={contract} wallet={wallet} />
       </div>
     </div>
