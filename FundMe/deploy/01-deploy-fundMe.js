@@ -6,7 +6,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const mockV3Aggregator = await deployments.get("MockV3Aggregator");
   const priceFeedAddress = mockV3Aggregator.address;
 
-  console.log("=============FundMe=================");
+  console.log("Deploying FundMe");
   const fundMe = await deploy("FundMe", {
     from: deployer,
     args: [priceFeedAddress],
