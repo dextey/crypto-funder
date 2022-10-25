@@ -16,6 +16,8 @@ contract FundMe {
 
     mapping(address => uint256) public fundedByAddress;
 
+    address[] public funders;
+
     modifier onlyOwner() {
         if (msg.sender != owner) revert FundMe_error();
         _;
@@ -31,6 +33,10 @@ contract FundMe {
             msg.value.convert(priceFeed) >= MINIMUM_USD,
             "Send minimum 50$ worth ethereum"
         );
+
+        if (fundedByAddress[msg.sender] == 0) {
+            funders.push(msg.sender);
+        }
         fundedByAddress[msg.sender] += msg.value;
     }
 
@@ -39,5 +45,17 @@ contract FundMe {
             ""
         );
         require(success, "Transaction failed");
+    }
+
+    function getFunders() public view returns (address[] memory) {
+        return funders;
+    }
+
+    fallback() external payable {
+        fund();
+    }
+
+    receive() external payable {
+        fund();
     }
 }
