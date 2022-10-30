@@ -9,7 +9,7 @@ const Navbar = ({ wallet, setWallet }) => {
   };
 
   return (
-    <div className="flex items-center justify-between width-full  p-3 backdrop-blur-sm-10 ">
+    <div className="flex items-center justify-between width-full h-[10%]  backdrop-blur-sm-10 ">
       <div className="text-[2rem] text-white title">CRYPO-FUNDER</div>
       <div className="flex items-center justify-center">
         <div className="">

@@ -53,9 +53,9 @@ const Funders = ({ contract }) => {
   funders.length && console.log(funders);
 
   return (
-    <div className="flex flex-col w-[25%] text-[#0ff] shadow-xl rounded-sm shadow-[#1e2546]">
-      <div className=" text-[2.3rem] p-3 font-extrabold   animate-bounce ">
-        <span>Top_Funders</span>
+    <div className="flex flex-col w-[25%] text-[#0ff] shadow-xl rounded-sm border-2 border-double ">
+      <div className=" text-[2.3rem] p-3 font-extrabold  bg-yellow-100 border-2 ">
+        <span className="animate-bounce text-black">Top_Funders</span>
       </div>
 
       <div className="flex  flex-col overflow-y-scroll overflow-x-hidden h-full  ">
@@ -63,14 +63,15 @@ const Funders = ({ contract }) => {
           return (
             <div
               key={index}
-              className="flex text-[1.3rem] my-1 bg-[#00ffff28] items-center"
+              className="flex text-[1.4rem] font-extrabold my-2  w-fit p-2
+               items-center"
             >
               <span>
                 {funder.address.slice(0, 8) +
                   "...." +
                   funder.address.slice(30, 42)}
               </span>
-              <span className="mx-2 font-extrabold bg-white rounded-full p-1 px-3">
+              <span className="mx-2  bg-yellow-200 text-black rounded-full p-1 px-3">
                 {funder.amount}ETH
               </span>
             </div>
