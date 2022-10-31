@@ -30,9 +30,9 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen w-full p-3 bg-gradient-to-br from-[#131130] via-[#171368dd] to-[#00ffff] flex flex-col overflow-hidden">
+    <div className="h-screen w-full p-3 bg-gradient-to-br from-[#1f1a2e] via-[#15141cdd] to-[#000000] flex flex-col ">
       <Navbar wallet={wallet} setWallet={setWallet} />
-      <div className="flex h-full py-4 justify-between">
+      <div className="flex h-[89%] py-4 justify-between">
         <Funders contract={contract} />
         <Main contract={contract} wallet={wallet} />
       </div>
