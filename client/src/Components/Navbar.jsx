@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const Navbar = ({ wallet, setWallet }) => {
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -7,6 +9,12 @@ const Navbar = ({ wallet, setWallet }) => {
       account.length && setWallet(account[0]);
     }
   };
+
+  useEffect(() => {
+    if (window.ethereum) {
+      if (window.ethereum.isConnected()) connectWallet();
+    }
+  }, []);
 
   return (
     <div className="flex items-center justify-between width-full h-[10%]  backdrop-blur-sm-10 ">

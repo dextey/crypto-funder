@@ -11,6 +11,8 @@ function App() {
 
   const [contract, setContract] = useState("");
 
+  const [transactionReceipt, setTransactionReceipt] = useState("");
+
   useEffect(() => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -33,8 +35,13 @@ function App() {
     <div className="h-screen w-full p-3 bg-gradient-to-br from-[#1f1a2e] via-[#15141cdd] to-[#000000] flex flex-col ">
       <Navbar wallet={wallet} setWallet={setWallet} />
       <div className="flex h-[89%] py-4 justify-between">
-        <Funders contract={contract} />
-        <Main contract={contract} wallet={wallet} />
+        <Funders contract={contract} transactionReceipt={transactionReceipt} />
+        <Main
+          contract={contract}
+          wallet={wallet}
+          transactionReceipt={transactionReceipt}
+          setTransactionReceipt={setTransactionReceipt}
+        />
       </div>
     </div>
   );
