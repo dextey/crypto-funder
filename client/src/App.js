@@ -10,7 +10,6 @@ function App() {
   const [wallet, setWallet] = useState(null);
 
   const [contract, setContract] = useState("");
-
   const [transactionReceipt, setTransactionReceipt] = useState("");
 
   useEffect(() => {
