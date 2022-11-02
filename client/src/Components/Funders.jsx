@@ -10,14 +10,7 @@ const Funders = ({ contract, transactionReceipt }) => {
   };
 
   const getFundersWithValues = (_funders) => {
-    let temp_funders = [
-      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "10" },
-      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "1.2" },
-      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.01" },
-      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.05" },
-      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.005" },
-      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.4" },
-    ];
+    let temp_funders = [];
     _funders.map(async (_funder) => {
       const amount = await contract.fundedByAddress(_funder);
       temp_funders.push({

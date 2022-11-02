@@ -31,6 +31,8 @@ const Main = ({ contract, transactionReceipt, setTransactionReceipt }) => {
         setError("Please enter a numeric value");
       } else if (error.message.slice(0, 40).includes("cannot estimate gas")) {
         setError("eth value must be minimum 50$ worthy");
+      } else if (error.message.slice(0, 40).includes("insufficient funds")) {
+        setError("you have insufficient funds ");
       } else {
         setError("Error : transaction failed");
       }
@@ -48,7 +50,7 @@ const Main = ({ contract, transactionReceipt, setTransactionReceipt }) => {
       setTransactionReceipt(receipt);
       console.log(receipt);
     } catch (error) {
-      if (error.error.message.includes("Internal JSON-RPC error"))
+      if (error.error.message.includes("execution reverted"))
         setError("Haha I am still worthy ,<br/> You cannot withdraw fund");
     }
   };
