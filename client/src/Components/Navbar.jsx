@@ -6,13 +6,13 @@ const Navbar = ({ wallet, setWallet }) => {
       const account = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      account.length && setWallet(account[0]);
+      setWallet(account[0]);
     }
   };
 
   useEffect(() => {
     if (window.ethereum) {
-      if (window.ethereum.isConnected()) connectWallet();
+      window.ethereum.isConnected() && connectWallet();
     }
   }, []);
 
@@ -21,13 +21,19 @@ const Navbar = ({ wallet, setWallet }) => {
       <div className="text-[2rem] text-white title">CRYPO-FUNDER</div>
       <div className="flex items-center justify-center">
         <div className="">
-          {!wallet && (
-            <button
-              onClick={connectWallet}
-              className="p-3 px-6 bg-gradient-to-tr from-blue-400 to-cyan-300 rounded-md hover:from-yellow-200 hover:to-yellow-100"
-            >
-              Connect Wallet
-            </button>
+          {window.ethereum ? (
+            !wallet && (
+              <button
+                onClick={connectWallet}
+                className="p-3 px-6 bg-gradient-to-tr from-blue-400 to-cyan-300 rounded-md hover:from-yellow-200 hover:to-yellow-100"
+              >
+                Connect Wallet
+              </button>
+            )
+          ) : (
+            <div className="p-3 bg-yellow-400 rounded-md">
+              please install metamask
+            </div>
           )}
         </div>
         <span className="mx-3 font-bold text-[1.2rem] text-white">

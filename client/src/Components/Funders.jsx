@@ -2,40 +2,52 @@ import { ethers } from "ethers";
 import { useEffect, useMemo, useState } from "react";
 
 const Funders = ({ contract, transactionReceipt }) => {
-  const [funders, setFunders] = useState([
-    { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "10" },
-  ]);
+  const [funders, setFunders] = useState([]);
 
   const getFunders = async () => {
     const data = await contract.getFunders();
     return data;
   };
 
-  useEffect(() => {
-    contract &&
-      getFunders().then((_funders) => {
-        _funders.map(async (_funder) => {
-          const amount = await contract.fundedByAddress(_funder);
-          setFunders((prev) => [
-            ...prev,
-            { address: _funder, amount: ethers.utils.formatEther(amount) },
-          ]);
-        });
+  const getFundersWithValues = (_funders) => {
+    let temp_funders = [
+      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "10" },
+      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "1.2" },
+      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.01" },
+      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.05" },
+      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.005" },
+      { address: "0xf39Fd6kljsdlkansfdgsdfgwsrg79cffFb92266", amount: "0.4" },
+    ];
+    _funders.map(async (_funder) => {
+      const amount = await contract.fundedByAddress(_funder);
+      temp_funders.push({
+        address: _funder,
+        amount: ethers.utils.formatEther(amount),
       });
+      temp_funders.sort(compare);
+      setFunders([...temp_funders]);
+    });
+  };
+
+  useEffect(() => {
+    contract && sort();
   }, [contract, transactionReceipt]);
 
-  const sort = () => {
-    function compare(a, b) {
-      if (parseFloat(a.amount) < parseFloat(b.amount)) {
-        return 1;
-      }
-      if (parseFloat(a.amount) > parseFloat(b.amount)) {
-        return -1;
-      }
-      return 0;
+  function compare(a, b) {
+    if (parseFloat(a.amount) < parseFloat(b.amount)) {
+      return 1;
     }
+    if (parseFloat(a.amount) > parseFloat(b.amount)) {
+      return -1;
+    }
+    return 0;
+  }
 
-    setFunders(() => [...funders.sort(compare)]);
+  const sort = () => {
+    contract &&
+      getFunders().then((_funders) => {
+        getFundersWithValues(_funders);
+      });
   };
 
   const list = useMemo(() => {
@@ -66,12 +78,9 @@ const Funders = ({ contract, transactionReceipt }) => {
   }, [funders]);
 
   return (
-    <div className="flex flex-col w-[25%] text-[#0ff] shadow-xl rounded-sm border-2 border-double ">
-      <div className=" text-[2.3rem] p-3 font-extrabold  bg-yellow-100 border-2 ">
+    <div className="flex flex-col w-[25%] text-[#63f7f7] shadow-xl rounded-sm border-2 border-double ">
+      <div className=" flex items-center justify-between text-[2.3rem] p-3 font-extrabold  bg-yellow-100 border-2 ">
         <span className="animate-bounce text-black">Top_Funders</span>
-        <button className="p-4 " onClick={sort}>
-          Sort
-        </button>
       </div>
       {list}
     </div>
